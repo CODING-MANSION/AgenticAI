@@ -20,5 +20,5 @@ def home():
 
 @app.get("/query/")
 def query(message: str):
-    response = multi_agent.run(message)
+    response = multi_agent.run(message).content
     return {"response": response}
