@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Agents API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        #response {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h2>Financial Agents Query</h2>
+    <input type="text" id="userInput" placeholder="Enter your query...">
+    <button onclick="sendQuery()">Ask</button>
+    <div id="response"></div>
+
+    <script>
+        async function sendQuery() {
+            const message = document.getElementById("userInput").value;
+            const responseDiv = document.getElementById("response");
+
+            if (!message) {
+                responseDiv.innerHTML = "Please enter a query!";
+                return;
+            }
+
+            responseDiv.innerHTML = "Fetching response...";
+
+            try {
+                const response = await fetch(`https://agenticai-production.up.railway.app/query/?message=${encodeURIComponent(message)}`);
+                const data = await response.json();
+                responseDiv.innerHTML = "Response: " + data.response;
+            } catch (error) {
+                responseDiv.innerHTML = "Error fetching response!";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
